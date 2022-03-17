@@ -68,7 +68,7 @@ namespace CaseOPGElgiganten.Controllers
             }
         }
 
-
+        [HttpPost]
         public async Task<ActionResult<ProductModel>> Post(ProductModel model)
         {
             try
