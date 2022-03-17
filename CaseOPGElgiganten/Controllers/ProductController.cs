@@ -48,29 +48,7 @@ namespace CaseOPGElgiganten.Controllers
 
         }
 
-        //[HttpGet("{productInfoID}")]
-        //[MapToApiVersion("1.0")]
-        //public async Task<ActionResult<ProductInfoModel>> Get(int productInfoID)
-        //{
-        //    try
-        //    {
-
-        //            var result = await _repository.GetProductInfoAsync(productInfoID);
-
-        //        if (result == null) return NotFound();
-
-        //        return _mapper.Map<ProductInfoModel>(result);
-
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //        return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
-        //    }
-        //}
-
         [HttpGet("{ean}/{gtin}")]
-        [MapToApiVersion("1.0")]
         public async Task<ActionResult<ProductModel>> Get(long? ean, long? gtin)
         {
             try
@@ -114,7 +92,7 @@ namespace CaseOPGElgiganten.Controllers
 
                 if (model.EAN != null)
                 {
-                    var location = _linkGenerator.GetPathByAction("Get", "ProductInfo", new { ean = model.EAN });
+                    var location = _linkGenerator.GetPathByAction("Get", "Product", new { ean = model.EAN });
 
                     if (string.IsNullOrWhiteSpace(location))
                     {
@@ -126,7 +104,7 @@ namespace CaseOPGElgiganten.Controllers
                     _repository.Add(product);
                     if (await _repository.SaveChangesAsync())
                     {
-                        return Created($"/api/ProductInfo/{product.EAN}", _mapper.Map<ProductModel>(product));
+                        return Created($"/api/Product/{product.EAN}", _mapper.Map<ProductModel>(product));
                     }
 
                 }
@@ -144,7 +122,7 @@ namespace CaseOPGElgiganten.Controllers
                     _repository.Add(product);
                     if (await _repository.SaveChangesAsync())
                     {
-                        return Created($"/api/ProductInfo/{product.GTIN}", _mapper.Map<ProductInfoModel>(product));
+                        return Created($"/api/ProductInfo/{product.GTIN}", _mapper.Map<ProductModel>(product));
                     }
                 }
 
